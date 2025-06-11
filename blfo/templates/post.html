@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Posts</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css'%}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        .titlepage{
+            text-align: center;
+        }
+        #new{
+        position: absolute;
+        top:15%;
+        left:91%;
+        color: white;
+        /* background-color: rgb(0, 0, 0); */
+        size:24px;
+    }
+    .remove_button_css { 
+  outline: none;
+  padding: 5px; 
+  border: 0px; 
+  box-sizing: none; 
+  background-color: transparent;
+  color:red;
+  font-size: 35px;
+  font-weight: bold; 
+}
+        
+    </style>
+</head>
+   
+<body>
+    <!-- <h2 class="titlepage">PostIt</h2> -->
+    <a href='../forump/' class="back"><i class="fa fa-2x fa-arrow-left"></i></a>
+    <div class="container">
+        <div class="subforum">
+            <div class="subforum-title">
+                <h1>{{forum}}</h1>
+                <form id="forum_data" method="post" action="/create/">
+                    {% csrf_token %}
+                    <input type="hidden" class="form-control" id="forum" name='forum' value="{{forum}}">
+                    <a onclick="document.getElementById('forum_data').submit()"><i class="fa fa-2x fa-plus" id="new"></i></a>
+                </form>
+            </div>
+            <hr class="subforum-devider">
+            {% for key, value in data.items %}
+                <div class="subforum-row">
+                    <div class="subforum-icon subforum-column center">
+                        <i class="fa fa-file"></i>
+                    </div>
+                    <div class="subforum-description subforum-column">
+                        <form id="post_data" method="post" action="/details/">
+                        {% csrf_token %}
+                        <input type="hidden" class="form-control" id="key" name='key' value="{{key}}">
+                        <input type="hidden" class="form-control" id="forum" name='forum' value="{{forum}}">
+                        <h1><button type="submit" class="btn remove_button_css">{{value.title}}</button></h1>
+                        </form>
+                        
+                    </div>
+                    <div class="subforum-stats subforum-column center">
+                        <span>{{value.comment_length}} comments</span>
+                    </div>
+                    <div class="subforum-info subforum-column">
+                        <a href="">{{value.username}}</a>
+                        <br>
+                        <small>Posted: {{value.date}}</small>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

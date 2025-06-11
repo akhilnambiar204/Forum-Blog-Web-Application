@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Posts</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css'%}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <title>Bootstrap demo</title> -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+    <style>
+        .titlepage{
+            text-align: center;
+        }
+        #new{
+        /* position: absolute; */
+        /* top:12%; */
+        /* left:91%; */
+        color: black;
+        /* background-color: rgb(0, 0, 0); */
+        size:24px;
+    }
+    /* body {
+        background-image: url("https://images.pexels.com/photos/1296726/pexels-photo-1296726.jpeg?cs=srgb&dl=pexels-eduardo-braga-1296726.jpg&fm=jpg");
+        background-color: #cccccc;
+        background-size:     cover;                      /* <------ */
+        /* background-repeat:   no-repeat; */
+        /* background-position: center center; */
+        /* }    */
+        html {
+            margin: 0;
+            padding:5%;
+            height: 100%;
+            background-color: #fffdd0;
+            /* background-image: url("https://love2justice.files.wordpress.com/2012/02/blog-background.jpg");
+            background-color: transparent;
+            background-size:     cover;                      /* <------ */
+            /* background-repeat:   no-repeat; */
+        }
+        .row{
+           padding-top: 3%;
+           padding-bottom: 4%;
+           padding-left: 1%;
+        }
+        
+    /* .container{
+        padding-top: 1000px;
+    } */
+    /* .blog_title{
+        position: absolute;
+        top: 5%;
+        left:45%;
+        color:black;
+        font-family: cursive;
+        font-size: 60px;
+        transform: rotateX(20deg) rotateY(30deg) rotateZ(10deg);
+    }
+    .line{
+        margin-top:14%;
+        margin-left: 40%;
+        height: 1px;
+        width: 112px;
+        background: black;
+        transform: rotateX(20deg) rotateY(30deg) rotateZ(10deg); */
+    /* } */
+    .remove_button_css { 
+  outline: none;
+  padding: 0px; 
+  border: 0px; 
+  box-sizing: none; 
+  background-color: transparent;
+  text-transform: uppercase;
+  /* color:red; */
+  /* font-size: 35px; */
+  /* font-weight: bold;  */
+}
+    .back{
+        color: black;
+    }
+    body{
+        background-color: transparent;
+    }
+        
+    </style>
+</head>
+   
+<body>
+    <a href='../blfo/' class="back"><i class="fa fa-4x fa-home"></i></a>
+    <div>
+        <div class="card">
+            <div class="card-body blogcard"> 
+                <div class="row">
+                    <h2 class="col-11 card-title">Blogs</h2>
+                    <form class="col-1" id="forum_data" method="post" action="/create_blog/">
+                        {% csrf_token %}
+                        <!-- <input type="hidden" class="form-control" id="forum" name='forum' value="{{forum}}"> -->
+                        <a href="/create_blog/"><i class="fa fa-2x fa-plus" id="new"></i></a>
+                    </form>
+                </div>
+                <div class="container-fluid">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr class="d-flex">
+                                <th class="col-1"></th>
+                                <th class="col-7">Title</th>
+                                <th class="col-2">Date</th>
+                                <th class="col-2">Created By</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for key, value in data.items %}
+                            <tr class="d-flex">
+                                <td class="col-1" style="text-align: center;">★</td>
+                                <td class="col-7">
+                                    <form id="post_data_{{key}}" method="post" action="/blog_panel/">
+                                        {% csrf_token %}
+                                        <input type="hidden" class="form-control" id="key" name='key' value="{{key}}">
+                                        <!-- <input type="hidden" class="form-control" id="forum" name='forum' value="{{forum}}"> -->
+                                        <p><button type="submit" class="btn remove_button_css">{{value.blogname}}</button></p>
+                                    </form>
+                                </td>
+                                <td class="col-2">{{value.date}}</td>
+                                <td class="col-2">{{value.blog_created_by}}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+              </div>
+        </div>
+    </div>
+    
+    <!-- <h2 class="titlepage">PostIt</h2> -->
+    
+</body>
+</html>
